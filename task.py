@@ -6,14 +6,14 @@ from datetime import datetime
 events = {
     "meetings": [],
     "training": [],
-    "project_deadlines": [],
-    "internal_events": [],
-    "client_presentations": [],
-    "shift_schedules": [],
+    "projectdeadlines": [],
+    "internalevents": [],
+    "clientpresentation": [],
+    "shiftscheduling": [],
     "resources": set(),
     "conferences": [],
-    "performance_reviews": [],
-    "onboarding_sessions": []
+    "performreview": [],
+    "onboardingsession": []
 }
 
 # Blogs will include images as well
@@ -39,7 +39,6 @@ def main():
             }
         )
 
-    # Custom CSS for styling
     st.markdown(r"""
         <style>
         body {
@@ -114,31 +113,31 @@ def main():
 
     # Routing for pages
     if selected == "Home":
-        home_page()
+        homepage()
     elif selected == "Meeting Management":
-        meeting_management()
+        meetingmanagement()
     elif selected == "Employee Training":
-        employee_training()
+        emptraining()
     elif selected == "Project Deadlines":
-        manage_projects()
+        manageproject()
     elif selected == "Internal Events":
-        internal_events()
+        internalevents()
     elif selected == "Client Presentations":
-        client_presentations()
+        clientpresentation()
     elif selected == "Shift Scheduling":
-        shift_scheduling()
+        shiftscheduling()
     elif selected == "Resource Allocation":
-        resource_allocation()
+        resourceallocation()
     elif selected == "Conferences":
-        manage_conferences()
+        manageconference()
     elif selected == "Performance Reviews":
-        performance_reviews()
+        performreview()
     elif selected == "Onboarding Sessions":
-        onboarding_sessions()
+        onboardingsession()
     elif selected == "Blog":
-        blog_page()
+        blogpage()
 
-def home_page():
+def homepage():
     st.write('<h1 class="main-title">Welcome to IT Event Scheduler</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage your meetings, training sessions, project deadlines, and more with ease.</p>', unsafe_allow_html=True)
     
@@ -155,8 +154,8 @@ def home_page():
     else:
         st.write("No blog posts available.")
 
-# Blog creation and display page
-def blog_page():
+
+def blogpage():
     st.write('<h1 class="main-title">Blog</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Create and view blog posts about recent and upcoming events.</p>', unsafe_allow_html=True)
     
@@ -190,24 +189,23 @@ def blog_page():
     else:
         st.write("No blog posts available.")
 
-# Meeting management page
-def meeting_management():
+def meetingmanagement():
     st.write('<h1 class="main-title">Meeting Management</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage and schedule meetings with employees, clients, or other stakeholders.</p>', unsafe_allow_html=True)
-    meeting_name = st.text_input("Meeting Name")
-    meeting_date = st.date_input("Meeting Date")
-    meeting_time = st.time_input("Meeting Time")
-    meeting_participants = st.text_area("Meeting Participants (comma separated)")
+    meetname = st.text_input("Meeting Name")
+    meetdate = st.date_input("Meeting Date")
+    meettime = st.time_input("Meeting Time")
+    meetparticpant = st.text_area("Meeting Participants (comma separated)")
     
     if st.button("Schedule Meeting"):
-        if meeting_name and meeting_date and meeting_time and meeting_participants:
+        if meetname and meetdate and meettime and meetparticpant:
             events['meetings'].append({
-                'name': meeting_name,
-                'date': meeting_date,
-                'time': meeting_time,
-                'participants': meeting_participants.split(',')
+                'name': meetname,
+                'date': meetdate,
+                'time': meettime,
+                'participants': meetparticpant.split(',')
             })
-            st.success(f"Meeting '{meeting_name}' scheduled successfully!")
+            st.success(f"Meeting '{meetname}' scheduled successfully!")
         else:
             st.error("Please fill in all fields.")
     
@@ -221,24 +219,24 @@ def meeting_management():
         st.write("No meetings scheduled.")
 
 
-# Employee training page
-def employee_training():
+
+def emptraining():
     st.write('<h1 class="main-title">Employee Training</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Schedule and track employee training sessions.</p>', unsafe_allow_html=True)
-    training_name = st.text_input("Training Name")
-    training_date = st.date_input("Training Date")
-    training_time = st.time_input("Training Time")
-    training_participants = st.text_area("Training Participants (comma separated)")
+    trainname = st.text_input("Training Name")
+    traindate = st.date_input("Training Date")
+    traintime = st.time_input("Training Time")
+    trainparticipant = st.text_area("Training Participants (comma separated)")
     
     if st.button("Schedule Training"):
-        if training_name and training_date and training_time and training_participants:
+        if trainname and traindate and traintime and trainparticipant:
             events['training'].append({
-                'name': training_name,
-                'date': training_date,
-                'time': training_time,
-                'participants': training_participants.split(',')
+                'name': trainname,
+                'date': traindate,
+                'time': traintime,
+                'participants': trainparticipant.split(',')
             })
-            st.success(f"Training '{training_name}' scheduled successfully!")
+            st.success(f"Training '{trainname}' scheduled successfully!")
         else:
             st.error("Please fill in all fields.")
     
@@ -252,118 +250,118 @@ def employee_training():
         st.write("No training sessions scheduled.")
 
 
-# Project deadlines page
-def manage_projects():
+
+def manageproject():
     st.write('<h1 class="main-title">Project Deadlines</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage and track project deadlines.</p>', unsafe_allow_html=True)
-    project_name = st.text_input("Project Name")
-    project_deadline = st.date_input("Project Deadline")
+    projname = st.text_input("Project Name")
+    projdeadline = st.date_input("Project Deadline")
     
     if st.button("Set Project Deadline"):
-        if project_name and project_deadline:
-            events['project_deadlines'].append({
-                'name': project_name,
-                'deadline': project_deadline
+        if projname and projdeadline:
+            events['projectdeadlines'].append({
+                'name': projname,
+                'deadline': projdeadline
             })
-            st.success(f"Project '{project_name}' deadline set successfully!")
+            st.success(f"Project '{projname}' deadline set successfully!")
         else:
             st.error("Please fill in all fields.")
     
     st.write('<p class="subheader-text">Project Deadlines</p>', unsafe_allow_html=True)
-    if events['project_deadlines']:
-        for project in events['project_deadlines']:
+    if events['projectdeadlines']:
+        for project in events['projectdeadlines']:
             st.write(f"**{project['name']}** - Deadline: {project['deadline']}")
             st.write("---")
     else:
         st.write("No project deadlines set.")
 
 
-# Internal events page
-def internal_events():
+
+def internalevents():
     st.write('<h1 class="main-title">Internal Events</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage and track internal company events.</p>', unsafe_allow_html=True)
-    event_name = st.text_input("Event Name")
-    event_date = st.date_input("Event Date")
-    event_time = st.time_input("Event Time")
+    eventname = st.text_input("Event Name")
+    eventdate = st.date_input("Event Date")
+    eventtime = st.time_input("Event Time")
     
     if st.button("Schedule Event"):
-        if event_name and event_date and event_time:
-            events['internal_events'].append({
-                'name': event_name,
-                'date': event_date,
-                'time': event_time
+        if eventname and eventdate and eventtime:
+            events['internalevents'].append({
+                'name': eventname,
+                'date': eventdate,
+                'time': eventtime
             })
-            st.success(f"Event '{event_name}' scheduled successfully!")
+            st.success(f"Event '{eventname}' scheduled successfully!")
         else:
             st.error("Please fill in all fields.")
     
     st.write('<p class="subheader-text">Scheduled Internal Events</p>', unsafe_allow_html=True)
-    if events['internal_events']:
-        for event in events['internal_events']:
+    if events['internalevents']:
+        for event in events['internalevents']:
             st.write(f"**{event['name']}** - {event['date']} at {event['time']}")
             st.write("---")
     else:
         st.write("No internal events scheduled.")
 
 
-# Client presentations page
-def client_presentations():
+
+def clientpresentation():
     st.write('<h1 class="main-title">Client Presentations</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Schedule and manage client presentations.</p>', unsafe_allow_html=True)
-    presentation_name = st.text_input("Presentation Name")
-    presentation_date = st.date_input("Presentation Date")
-    presentation_time = st.time_input("Presentation Time")
+    presentname = st.text_input("Presentation Name")
+    presentdate = st.date_input("Presentation Date")
+    presenttime = st.time_input("Presentation Time")
     
     if st.button("Schedule Presentation"):
-        if presentation_name and presentation_date and presentation_time:
-            events['client_presentations'].append({
-                'name': presentation_name,
-                'date': presentation_date,
-                'time': presentation_time
+        if presentname and presentdate and presenttime:
+            events['clientpresentation'].append({
+                'name': presentname,
+                'date': presentdate,
+                'time': presenttime
             })
-            st.success(f"Presentation '{presentation_name}' scheduled successfully!")
+            st.success(f"Presentation '{presentname}' scheduled successfully!")
         else:
             st.error("Please fill in all fields.")
     
     st.write('<p class="subheader-text">Scheduled Client Presentations</p>', unsafe_allow_html=True)
-    if events['client_presentations']:
-        for presentation in events['client_presentations']:
+    if events['clientpresentation']:
+        for presentation in events['clientpresentation']:
             st.write(f"**{presentation['name']}** - {presentation['date']} at {presentation['time']}")
             st.write("---")
     else:
         st.write("No client presentations scheduled.")
 
 
-# Shift scheduling page
-def shift_scheduling():
+
+def shiftscheduling():
     st.write('<h1 class="main-title">Shift Scheduling</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage employee shift schedules.</p>', unsafe_allow_html=True)
-    employee_name = st.text_input("Employee Name")
-    shift_date = st.date_input("Shift Date")
-    shift_time = st.time_input("Shift Time")
+    empname = st.text_input("Employee Name")
+    sdate = st.date_input("Shift Date")
+    stime = st.time_input("Shift Time")
     
     if st.button("Schedule Shift"):
-        if employee_name and shift_date and shift_time:
-            events['shift_schedules'].append({
-                'name': employee_name,
-                'date': shift_date,
-                'time': shift_time
+        if empname and sdate and stime:
+            events['shiftscheduling'].append({
+                'name': empname,
+                'date': sdate,
+                'time': stime
             })
-            st.success(f"Shift for '{employee_name}' scheduled successfully!")
+            st.success(f"Shift for '{empname}' scheduled successfully!")
         else:
             st.error("Please fill in all fields.")
     
     st.write('<p class="subheader-text">Scheduled Shifts</p>', unsafe_allow_html=True)
-    if events['shift_schedules']:
-        for shift in events['shift_schedules']:
+    if events['shiftscheduling']:
+        for shift in events['shiftscheduling']:
             st.write(f"**{shift['name']}** - {shift['date']} at {shift['time']}")
             st.write("---")
     else:
         st.write("No shifts scheduled.")
 
 
-# Resource allocation page
-def resource_allocation():
+
+def resourceallocation():
     st.write('<h1 class="main-title">Resource Allocation</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage and allocate resources for projects or events.</p>', unsafe_allow_html=True)
     resource_name = st.text_input("Resource Name")
@@ -383,20 +381,20 @@ def resource_allocation():
         st.write("No resources allocated.")
 
 
-# Conferences page
-def manage_conferences():
+
+def manageconference():
     st.write('<h1 class="main-title">Conferences</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage and track conferences.</p>', unsafe_allow_html=True)
-    conference_name = st.text_input("Conference Name")
-    conference_date = st.date_input("Conference Date")
+    cname = st.text_input("Conference Name")
+    cdate = st.date_input("Conference Date")
     
     if st.button("Add Conference"):
-        if conference_name and conference_date:
+        if cname and cdate:
             events['conferences'].append({
-                'name': conference_name,
-                'date': conference_date
+                'name': cname,
+                'date': cdate
             })
-            st.success(f"Conference '{conference_name}' added successfully!")
+            st.success(f"Conference '{cname}' added successfully!")
         else:
             st.error("Please fill in all fields.")
     
@@ -409,52 +407,51 @@ def manage_conferences():
         st.write("No conferences scheduled.")
 
 
-# Performance reviews page
-def performance_reviews():
+
+def performreview():
     st.write('<h1 class="main-title">Performance Reviews</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Schedule and manage employee performance reviews.</p>', unsafe_allow_html=True)
-    review_name = st.text_input("Employee Name for Review")
-    review_date = st.date_input("Review Date")
+    rname = st.text_input("Employee Name for Review")
+    rdate = st.date_input("Review Date")
     
     if st.button("Schedule Review"):
-        if review_name and review_date:
-            events['performance_reviews'].append({
-                'name': review_name,
-                'date': review_date
+        if rname and rdate:
+            events['performreview'].append({
+                'name': rname,
+                'date': rdate
             })
-            st.success(f"Review for '{review_name}' scheduled successfully!")
+            st.success(f"Review for '{rname}' scheduled successfully!")
         else:
             st.error("Please fill in all fields.")
     
     st.write('<p class="subheader-text">Scheduled Reviews</p>', unsafe_allow_html=True)
-    if events['performance_reviews']:
-        for review in events['performance_reviews']:
+    if events['performreview']:
+        for review in events['performreview']:
             st.write(f"**{review['name']}** - {review['date']}")
             st.write("---")
     else:
         st.write("No reviews scheduled.")
 
 
-# Onboarding sessions page
-def onboarding_sessions():
+def onboardingsession():
     st.write('<h1 class="main-title">Onboarding Sessions</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Schedule and manage employee onboarding sessions.</p>', unsafe_allow_html=True)
-    session_name = st.text_input("Employee Name for Onboarding")
-    session_date = st.date_input("Onboarding Date")
+    ssname = st.text_input("Employee Name for Onboarding")
+    ssdate = st.date_input("Onboarding Date")
     
     if st.button("Schedule Onboarding"):
-        if session_name and session_date:
-            events['onboarding_sessions'].append({
-                'name': session_name,
-                'date': session_date
+        if ssname and ssdate:
+            events['onboardingsession'].append({
+                'name': ssname,
+                'date': ssdate
             })
-            st.success(f"Onboarding session for '{session_name}' scheduled successfully!")
+            st.success(f"Onboarding session for '{ssname}' scheduled successfully!")
         else:
             st.error("Please fill in all fields.")
     
     st.write('<p class="subheader-text">Scheduled Onboarding Sessions</p>', unsafe_allow_html=True)
-    if events['onboarding_sessions']:
-        for session in events['onboarding_sessions']:
+    if events['onboardingsession']:
+        for session in events['onboardingsession']:
             st.write(f"**{session['name']}** - {session['date']}")
             st.write("---")
     else:
